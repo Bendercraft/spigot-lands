@@ -1,0 +1,21 @@
+name: Lands
+main: world.avatarhorizon.spigot.lands.LandsPlugin
+authors: [Nokorbis, Koudja]
+version: 0.1.0
+depend: [WorldEdit]
+softdepend: []
+commands:
+    lands:
+        description: Lands main command
+        aliases: [ld, land]
+        usage: /lands help
+permissions:
+    lands.*:
+        description: Permission to access every command
+        default: op
+        children:
+        - dominion.admin.*
+    lands.admin.*:
+        description: Permission to access every ADMIN command
+        default: false
+
