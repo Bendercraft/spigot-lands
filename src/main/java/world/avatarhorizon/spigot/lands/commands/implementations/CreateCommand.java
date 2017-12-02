@@ -12,10 +12,15 @@ import world.avatarhorizon.spigot.lands.models.Land;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
-public class CreateCommand extends LandSubCommand
+public final class CreateCommand extends LandSubCommand
 {
+
+    private static final Pattern NAME_PATTERN = Pattern.compile("\"([\\w ]+)\"");
+
     public CreateCommand(ResourceBundle resourceBundle, Logger logger, LandsManager landsManager)
     {
         super("create", resourceBundle, logger, landsManager);
@@ -34,11 +39,18 @@ public class CreateCommand extends LandSubCommand
             throw new LandCommandException(messages.getString("error.player_requirement"));
         }
 
-        String name = String.join(" ", args).replace('"',' ').trim();
-        if (name == null || name.equals(""))
+        String temp = String.join(" ", args).trim();
+        if (temp == null || temp.equals(""))
+        {
+            throw new LandCommandException(messages.getString("error.creation.empty_params"));
+        }
+
+        Matcher matcher = NAME_PATTERN.matcher(temp);
+        if (!matcher.matches())
         {
             throw new LandCommandException(messages.getString("error.creation.invalid_name"));
         }
+        String name = matcher.group(1);
 
         try
         {
