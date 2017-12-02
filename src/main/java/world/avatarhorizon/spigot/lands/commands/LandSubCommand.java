@@ -6,19 +6,22 @@ import world.avatarhorizon.spigot.lands.exceptions.LandCommandException;
 
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 public abstract class LandSubCommand
 {
     protected final ResourceBundle messages;
     protected final LandsManager landsManager;
+    protected final Logger logger;
 
     private final String label;
     protected List<String> aliases = null;
 
-    public LandSubCommand(String label, ResourceBundle resourceBundle, LandsManager landsManager)
+    public LandSubCommand(String label, ResourceBundle resourceBundle, Logger logger, LandsManager landsManager)
     {
         this.label = label;
         this.messages = resourceBundle;
+        this.logger = logger;
         this.landsManager = landsManager;
     }
 

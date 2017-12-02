@@ -63,11 +63,11 @@ public final class LandsManager
             lands.put(world, worldLands);
         }
 
-        if (worldLands.containsKey(land.getName()))
+        if (worldLands.containsKey(land.getName().toLowerCase()))
         {
             throw new LandCreationException(LandCreationException.CAUSE_LAND_NAME_USED);
         }
 
-        worldLands.put(land.getName(), land);
+        worldLands.put(land.getName().toLowerCase(), land);
     }
 }

@@ -11,13 +11,14 @@ import world.avatarhorizon.spigot.lands.models.Land;
 
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 
 public class CreateCommand extends LandSubCommand
 {
-    public CreateCommand(ResourceBundle resourceBundle, LandsManager landsManager)
+    public CreateCommand(ResourceBundle resourceBundle, Logger logger, LandsManager landsManager)
     {
-        super("create", resourceBundle, landsManager);
+        super("create", resourceBundle, logger, landsManager);
     }
 
     @Override
@@ -46,6 +47,7 @@ public class CreateCommand extends LandSubCommand
             land.setName(name);
             landsManager.addLandToWorld(p.getWorld(), land);
             sender.sendMessage(ChatColor.GREEN + messages.getString("success.creation"));
+            logger.info("Lands \"" + land.getName() + "\" created.");
         }
         catch (LandCreationException e)
         {

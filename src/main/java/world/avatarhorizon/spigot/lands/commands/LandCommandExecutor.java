@@ -13,23 +13,25 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 public class LandCommandExecutor implements CommandExecutor
 {
     private ResourceBundle messages;
     private List<LandSubCommand> subCommands;
 
-    public LandCommandExecutor(LandsManager landsManager, WorldEditPlugin worldEditPlugin)
+    public LandCommandExecutor(Logger logger, LandsManager landsManager, WorldEditPlugin worldEditPlugin)
     {
         messages = ResourceBundle.getBundle("messages/commands");
         subCommands = new LinkedList<>();
-        subCommands.add(new CreateCommand(messages, landsManager));
+        subCommands.add(new CreateCommand(messages, logger, landsManager));
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
     {
-        List<String> argsList = Arrays.asList(args);
+        List<String> argsList = new LinkedList<>(Arrays.asList(args));
+
         String sub = argsList.remove(0);
 
         for (LandSubCommand subCommand : subCommands)
@@ -44,7 +46,7 @@ public class LandCommandExecutor implements CommandExecutor
                 catch (LandCommandException ex)
                 {
                     sender.sendMessage(ChatColor.DARK_RED + ex.getMessage());
-                    return false;
+                    return true;
                 }
             }
         }

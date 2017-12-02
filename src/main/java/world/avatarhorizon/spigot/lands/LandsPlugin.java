@@ -26,7 +26,7 @@ public class LandsPlugin extends JavaPlugin
         else
         {
             landsManager = new LandsManager();
-            LandCommandExecutor commandExecutor = new LandCommandExecutor(landsManager, worldEditPlugin);
+            LandCommandExecutor commandExecutor = new LandCommandExecutor(logger, landsManager, worldEditPlugin);
 
             getCommand("lands").setExecutor(commandExecutor);
             getServer().getServicesManager().register(LandsManager.class, landsManager, this, ServicePriority.Normal);
