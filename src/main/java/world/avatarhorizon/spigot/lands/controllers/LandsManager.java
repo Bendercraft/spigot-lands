@@ -1,8 +1,8 @@
 package world.avatarhorizon.spigot.lands.controllers;
 
-import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import org.bukkit.World;
 import world.avatarhorizon.spigot.lands.exceptions.LandCreationException;
+import world.avatarhorizon.spigot.lands.exceptions.LandRenameException;
 import world.avatarhorizon.spigot.lands.models.Land;
 
 import java.util.Collections;
@@ -54,8 +54,6 @@ public final class LandsManager
             throw new LandCreationException(LandCreationException.CAUSE_LAND_NO_NAME);
         }
 
-        world.getChunkAt(0,0);
-
         Map<String, Land> worldLands = lands.get(world);
         if (worldLands == null)
         {
@@ -69,5 +67,50 @@ public final class LandsManager
         }
 
         worldLands.put(land.getName().toLowerCase(), land);
+    }
+
+    /**
+     * Rename a land in a world
+     * @param world The world in which the land we want to edit lies
+     * @param oldName The name of the land we want to edit
+     * @param newName The new name we want to set to the land
+     * @throws LandRenameException if any error happened during the renaming.
+     */
+    public void renameLandInWorld(World world, String oldName, String newName) throws LandRenameException
+    {
+        if (world == null)
+        {
+            throw new LandRenameException(LandRenameException.CAUSE_NULL_WORLD);
+        }
+        if (oldName == null || oldName.trim().equals(""))
+        {
+            throw new LandRenameException(LandRenameException.CAUSE_NULL_OLD_NAME);
+        }
+        if (newName == null || newName.trim().equals(""))
+        {
+            throw new LandRenameException(LandRenameException.CAUSE_NULL_NEW_NAME);
+        }
+
+        Map<String, Land> worldLands = lands.get(world);
+        if (worldLands == null || worldLands.isEmpty())
+        {
+            throw new LandRenameException(LandRenameException.CAUSE_NO_LAND);
+        }
+
+        oldName = oldName.toLowerCase();
+        Land land = worldLands.get(oldName);
+        if (land == null)
+        {
+            throw new LandRenameException(LandRenameException.CAUSE_NO_LAND);
+        }
+
+        if (worldLands.containsKey(newName.toLowerCase()))
+        {
+            throw new LandRenameException(LandRenameException.CAUSE_LAND_NAME_USED);
+        }
+
+        land.setName(newName);
+        worldLands.remove(oldName);
+        worldLands.put(newName.toLowerCase(), land);
     }
 }
