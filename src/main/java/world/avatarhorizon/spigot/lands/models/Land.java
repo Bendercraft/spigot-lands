@@ -1,7 +1,5 @@
 package world.avatarhorizon.spigot.lands.models;
 
-import org.bukkit.Chunk;
-
 import java.util.*;
 
 public class Land
@@ -9,7 +7,7 @@ public class Land
     private UUID id;
     private String name;
     private String description;
-    private List<Chunk> chunks;
+    private List<ChunkLocation> chunks;
     private ILandOwner owner;
 
     private Map<String, String> attributes;
@@ -59,12 +57,12 @@ public class Land
         this.description = description;
     }
 
-    public List<Chunk> getChunks()
+    public List<ChunkLocation> getChunks()
     {
         return chunks;
     }
 
-    public void setChunks(List<Chunk> chunks)
+    public void setChunks(List<ChunkLocation> chunks)
     {
         this.chunks = chunks;
     }

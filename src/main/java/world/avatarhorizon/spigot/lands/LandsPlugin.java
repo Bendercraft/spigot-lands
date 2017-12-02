@@ -4,6 +4,7 @@ import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
+import world.avatarhorizon.spigot.lands.commands.LandCommandExecutor;
 import world.avatarhorizon.spigot.lands.controllers.LandsManager;
 
 import java.util.logging.Logger;
@@ -24,7 +25,10 @@ public class LandsPlugin extends JavaPlugin
         }
         else
         {
-            landsManager = new LandsManager(worldEditPlugin);
+            landsManager = new LandsManager();
+            LandCommandExecutor commandExecutor = new LandCommandExecutor(landsManager, worldEditPlugin);
+
+            getCommand("lands").setExecutor(commandExecutor);
             getServer().getServicesManager().register(LandsManager.class, landsManager, this, ServicePriority.Normal);
         }
     }

@@ -14,8 +14,13 @@ permissions:
         description: Permission to access every command
         default: op
         children:
-        - dominion.admin.*
+        - lands.admin.*
     lands.admin.*:
         description: Permission to access every ADMIN command
+        default: false
+        children:
+        - lands.admin.create
+    lands.admin.create:
+        description: Permission to create a new land
         default: false
 

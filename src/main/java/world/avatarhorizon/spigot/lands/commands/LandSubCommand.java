@@ -2,6 +2,7 @@ package world.avatarhorizon.spigot.lands.commands;
 
 import org.bukkit.command.CommandSender;
 import world.avatarhorizon.spigot.lands.controllers.LandsManager;
+import world.avatarhorizon.spigot.lands.exceptions.LandCommandException;
 
 import java.util.List;
 import java.util.ResourceBundle;
@@ -11,7 +12,8 @@ public abstract class LandSubCommand
     protected final ResourceBundle messages;
     protected final LandsManager landsManager;
 
-    protected final String label;
+    private final String label;
+    protected List<String> aliases = null;
 
     public LandSubCommand(String label, ResourceBundle resourceBundle, LandsManager landsManager)
     {
@@ -22,8 +24,22 @@ public abstract class LandSubCommand
 
     public boolean isCommand(String otherLabel)
     {
-        return this.label.equals(otherLabel);
+        if (this.label.equals(otherLabel))
+        {
+            return true;
+        }
+        if (aliases != null)
+        {
+            for (String alias : aliases)
+            {
+                if (alias.equals(otherLabel))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
-    public abstract boolean execute(CommandSender sender, List<String> args);
+    public abstract void execute(CommandSender sender, List<String> args) throws LandCommandException;
 }

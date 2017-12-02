@@ -11,13 +11,10 @@ import java.util.Map;
 
 public final class LandsManager
 {
-
-    private WorldEditPlugin worldEditPlugin;
     private Map<World, Map<String, Land>> lands;
 
-    public LandsManager(WorldEditPlugin worldEditPlugin)
+    public LandsManager()
     {
-        this.worldEditPlugin = worldEditPlugin;
         lands = new HashMap<>();
     }
 
@@ -52,10 +49,12 @@ public final class LandsManager
         {
             throw new LandCreationException(LandCreationException.CAUSE_NULL_LAND);
         }
-        if (land.getName() == null)
+        if (land.getName() == null || land.getName().trim().equals(""))
         {
             throw new LandCreationException(LandCreationException.CAUSE_LAND_NO_NAME);
         }
+
+        world.getChunkAt(0,0);
 
         Map<String, Land> worldLands = lands.get(world);
         if (worldLands == null)

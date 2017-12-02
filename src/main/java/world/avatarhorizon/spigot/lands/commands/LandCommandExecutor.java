@@ -1,9 +1,13 @@
 package world.avatarhorizon.spigot.lands.commands;
 
+import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import world.avatarhorizon.spigot.lands.commands.implementations.CreateCommand;
 import world.avatarhorizon.spigot.lands.controllers.LandsManager;
+import world.avatarhorizon.spigot.lands.exceptions.LandCommandException;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -15,10 +19,11 @@ public class LandCommandExecutor implements CommandExecutor
     private ResourceBundle messages;
     private List<LandSubCommand> subCommands;
 
-    private LandCommandExecutor(LandsManager landsManager)
+    public LandCommandExecutor(LandsManager landsManager, WorldEditPlugin worldEditPlugin)
     {
         messages = ResourceBundle.getBundle("messages/commands");
         subCommands = new LinkedList<>();
+        subCommands.add(new CreateCommand(messages, landsManager));
     }
 
     @Override
@@ -31,8 +36,16 @@ public class LandCommandExecutor implements CommandExecutor
         {
             if (subCommand.isCommand(sub))
             {
-                subCommand.execute(sender, argsList);
-                return true;
+                try
+                {
+                    subCommand.execute(sender, argsList);
+                    return true;
+                }
+                catch (LandCommandException ex)
+                {
+                    sender.sendMessage(ChatColor.DARK_RED + ex.getMessage());
+                    return false;
+                }
             }
         }
         return false;

@@ -9,6 +9,7 @@ public class LandCommandException extends LandException
         this.message = message;
     }
 
+    @Override
     public String getMessage()
     {
         return this.message;
