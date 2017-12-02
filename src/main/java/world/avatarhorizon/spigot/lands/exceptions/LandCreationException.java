@@ -2,19 +2,19 @@ package world.avatarhorizon.spigot.lands.exceptions;
 
 public class LandCreationException extends LandException
 {
-    public static final short CAUSE_NULL_WORLD = 1;
-    public static final short CAUSE_NULL_LAND = 2;
-    public static final short CAUSE_LAND_NO_NAME = 3;
-    public static final short CAUSE_LAND_NAME_USED = 4;
+    public static final String CAUSE_NULL_WORLD = "error.creation.null_world";
+    public static final String CAUSE_NULL_LAND = "error.creation.null_land";
+    public static final String CAUSE_LAND_NO_NAME = "error.creation.land_no_name";
+    public static final String CAUSE_LAND_NAME_USED = "error.creation.land_name_used";
 
-    private short cause;
+    private String cause;
 
-    public LandCreationException(short causeNumber)
+    public LandCreationException(String causeKey)
     {
-        this.cause = causeNumber;
+        this.cause = causeKey;
     }
 
-    public short getCauseNumber()
+    public String getCauseKey()
     {
         return cause;
     }

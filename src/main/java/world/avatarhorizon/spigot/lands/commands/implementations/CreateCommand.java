@@ -49,20 +49,7 @@ public class CreateCommand extends LandSubCommand
         }
         catch (LandCreationException e)
         {
-            short number = e.getCauseNumber();
-            switch(number)
-            {
-                case LandCreationException.CAUSE_NULL_WORLD:
-                    throw new LandCommandException(messages.getString("error.creation.null_world"));
-                case LandCreationException.CAUSE_NULL_LAND:
-                    throw new LandCommandException(messages.getString("error.creation.null_land"));
-                case LandCreationException.CAUSE_LAND_NO_NAME:
-                    throw new LandCommandException(messages.getString("error.creation.land_no_name"));
-                case LandCreationException.CAUSE_LAND_NAME_USED:
-                    throw new LandCommandException(messages.getString("error.creation.land_name_used"));
-                default:
-                    throw new LandCommandException(messages.getString("error.invalid_cause_number"));
-            }
+            throw new LandCommandException(messages.getString(e.getCauseKey()));
         }
     }
 }
