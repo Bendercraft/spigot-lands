@@ -2,6 +2,7 @@ package world.avatarhorizon.spigot.lands.controllers;
 
 import org.bukkit.World;
 import world.avatarhorizon.spigot.lands.exceptions.LandCreationException;
+import world.avatarhorizon.spigot.lands.exceptions.LandDescriptionException;
 import world.avatarhorizon.spigot.lands.exceptions.LandRenameException;
 import world.avatarhorizon.spigot.lands.models.Land;
 
@@ -112,5 +113,39 @@ public final class LandsManager
         land.setName(newName);
         worldLands.remove(oldName);
         worldLands.put(newName.toLowerCase(), land);
+    }
+
+    /**
+     * Define the description of a Land in a world
+     * @param world The world in which the Land lies
+     * @param name The name of the Land
+     * @param description The description to set
+     * @throws LandDescriptionException
+     */
+    public void setLandDescription(World world, String name, String description) throws LandDescriptionException
+    {
+        if (world == null)
+        {
+            throw new LandDescriptionException(LandDescriptionException.CAUSE_NULL_WORLD);
+        }
+        if (name == null || name.trim().equals(""))
+        {
+            throw new LandDescriptionException(LandDescriptionException.CAUSE_NULL_NAME);
+        }
+
+        //No need to check if description is empty or not. Optional attribute
+        Map<String, Land> worldLands = lands.get(world);
+        if (worldLands == null || worldLands.isEmpty())
+        {
+            throw new LandDescriptionException(LandDescriptionException.CAUSE_NO_LAND);
+        }
+
+        Land land = worldLands.get(name.toLowerCase());
+        if (land == null)
+        {
+            throw new LandDescriptionException(LandDescriptionException.CAUSE_NO_LAND);
+        }
+
+        land.setDescription(description);
     }
 }
