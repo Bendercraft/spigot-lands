@@ -7,7 +7,6 @@ import world.avatarhorizon.spigot.lands.commands.LandSubCommand;
 import world.avatarhorizon.spigot.lands.controllers.LandsManager;
 import world.avatarhorizon.spigot.lands.exceptions.LandCommandException;
 import world.avatarhorizon.spigot.lands.exceptions.LandManagementException;
-import world.avatarhorizon.spigot.lands.exceptions.LandRenameException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,5 +66,11 @@ public class DescriptionCommand extends LandSubCommand
         {
             throw new LandCommandException(messages.getString(e.getCauseKey()));
         }
+    }
+
+    @Override
+    public void sendHelp(CommandSender sender)
+    {
+        sender.sendMessage(ChatColor.DARK_AQUA + "/lands description \"NAME\" \"DESCRIPTION\"");
     }
 }

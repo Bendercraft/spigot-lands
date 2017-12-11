@@ -67,4 +67,10 @@ public final class RenameCommand extends LandSubCommand
             throw new LandCommandException(messages.getString(e.getCauseKey()));
         }
     }
+
+    @Override
+    public void sendHelp(CommandSender sender)
+    {
+        sender.sendMessage(ChatColor.DARK_AQUA + "/lands rename \"OLD_NAME\" \"NEW_NAME\"");
+    }
 }

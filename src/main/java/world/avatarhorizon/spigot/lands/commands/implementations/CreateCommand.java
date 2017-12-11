@@ -66,4 +66,10 @@ public final class CreateCommand extends LandSubCommand
             throw new LandCommandException(messages.getString(e.getCauseKey()));
         }
     }
+
+    @Override
+    public void sendHelp(CommandSender sender)
+    {
+        sender.sendMessage(ChatColor.DARK_AQUA + "/lands create \"NAME\"");
+    }
 }

@@ -7,6 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import world.avatarhorizon.spigot.lands.commands.implementations.CreateCommand;
 import world.avatarhorizon.spigot.lands.commands.implementations.DescriptionCommand;
+import world.avatarhorizon.spigot.lands.commands.implementations.HelpCommand;
 import world.avatarhorizon.spigot.lands.commands.implementations.RenameCommand;
 import world.avatarhorizon.spigot.lands.controllers.LandsManager;
 import world.avatarhorizon.spigot.lands.exceptions.LandCommandException;
@@ -28,8 +29,9 @@ public class LandCommandExecutor implements CommandExecutor
         subCommands = new LinkedList<>();
 
         subCommands.add(new CreateCommand(messages, logger, landsManager));
-        subCommands.add(new RenameCommand(messages, logger, landsManager));
         subCommands.add(new DescriptionCommand(messages, logger, landsManager));
+        subCommands.add(new RenameCommand(messages, logger, landsManager));
+        subCommands.add(new HelpCommand(messages, logger, landsManager, subCommands));
     }
 
     @Override

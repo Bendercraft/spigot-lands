@@ -20,7 +20,19 @@ permissions:
         default: false
         children:
         - lands.admin.create
+        - lands.admin.rename
+        - lands.admin.description
+        - lands.admin.help
     lands.admin.create:
         description: Permission to create a new land
+        default: false
+    lands.admin.rename:
+        description: Permission to rename a land
+        default: false
+    lands.admin.description:
+        description: Permission to define the description of a land
+        default: false
+    lands.admin.help:
+        description: Permission to call the help command
         default: false
 

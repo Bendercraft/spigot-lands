@@ -45,4 +45,6 @@ public abstract class LandSubCommand
     }
 
     public abstract void execute(CommandSender sender, List<String> args) throws LandCommandException;
+
+    public abstract void sendHelp(CommandSender sender);
 }
