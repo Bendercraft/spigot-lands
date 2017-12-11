@@ -18,7 +18,6 @@ import java.util.regex.Pattern;
 
 public final class CreateCommand extends LandSubCommand
 {
-
     private static final Pattern NAME_PATTERN = Pattern.compile("\"([\\w ]+)\"");
 
     public CreateCommand(ResourceBundle resourceBundle, Logger logger, LandsManager landsManager)
@@ -58,7 +57,7 @@ public final class CreateCommand extends LandSubCommand
             Land land = new Land();
             land.setName(name);
             landsManager.addLandToWorld(p.getWorld(), land);
-            sender.sendMessage(ChatColor.GREEN + messages.getString("success.creation"));
+            sender.sendMessage(messages.getString("success.creation"));
             logger.info("Lands \"" + land.getName() + "\" created.");
         }
         catch (LandCreationException e)
@@ -68,8 +67,8 @@ public final class CreateCommand extends LandSubCommand
     }
 
     @Override
-    public void sendHelp(CommandSender sender)
+    protected String getHelpKey()
     {
-        sender.sendMessage(ChatColor.DARK_AQUA + messages.getString("help.create"));
+        return "help.create";
     }
 }

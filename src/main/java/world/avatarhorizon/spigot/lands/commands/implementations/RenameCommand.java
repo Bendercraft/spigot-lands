@@ -59,7 +59,7 @@ public final class RenameCommand extends LandSubCommand
         {
             Player p = (Player) sender;
             landsManager.renameLandInWorld(p.getWorld(), oldName, newName);
-            sender.sendMessage(ChatColor.GREEN + messages.getString("success.rename"));
+            sender.sendMessage(messages.getString("success.rename"));
             logger.info("Lands \"" + oldName + "\" has been renamed as \"" + newName + "\"");
         }
         catch (LandRenameException e)
@@ -69,8 +69,9 @@ public final class RenameCommand extends LandSubCommand
     }
 
     @Override
-    public void sendHelp(CommandSender sender)
+    protected String getHelpKey()
     {
-        sender.sendMessage(ChatColor.DARK_AQUA + messages.getString("help.rename"));
+        return "help.rename";
     }
+
 }

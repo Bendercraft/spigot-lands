@@ -23,6 +23,8 @@ permissions:
         - lands.admin.rename
         - lands.admin.description
         - lands.admin.help
+        - lands.admin.addchunks
+        - lands.admin.removechunks
     lands.admin.create:
         description: Permission to create a new land
         default: false
@@ -34,5 +36,11 @@ permissions:
         default: false
     lands.admin.help:
         description: Permission to call the help command
+        default: false
+    lands.admin.addchunks:
+        description: Permission to add chunks to a land
+        default: false
+    lands.admin.removechunks:
+        description: Permission to remove chunks to a land
         default: false
 

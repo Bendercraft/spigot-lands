@@ -1,5 +1,6 @@
 package world.avatarhorizon.spigot.lands.commands;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import world.avatarhorizon.spigot.lands.controllers.LandsManager;
 import world.avatarhorizon.spigot.lands.exceptions.LandCommandException;
@@ -46,5 +47,10 @@ public abstract class LandSubCommand
 
     public abstract void execute(CommandSender sender, List<String> args) throws LandCommandException;
 
-    public abstract void sendHelp(CommandSender sender);
+    public void sendHelp(CommandSender sender)
+    {
+        sender.sendMessage(messages.getString(getHelpKey()));
+    }
+
+    protected abstract String getHelpKey();
 }

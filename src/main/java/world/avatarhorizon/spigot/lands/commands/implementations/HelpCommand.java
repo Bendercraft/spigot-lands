@@ -1,6 +1,6 @@
 package world.avatarhorizon.spigot.lands.commands.implementations;
 
-import org.bukkit.ChatColor;
+import com.mysql.jdbc.Messages;
 import org.bukkit.command.CommandSender;
 import world.avatarhorizon.spigot.lands.commands.LandSubCommand;
 import world.avatarhorizon.spigot.lands.controllers.LandsManager;
@@ -28,17 +28,16 @@ public class HelpCommand extends LandSubCommand
     @Override
     public void execute(CommandSender sender, List<String> args) throws LandCommandException
     {
-        boolean found = false;
         if (args.isEmpty())
         {
             for (LandSubCommand command : commands)
             {
                 command.sendHelp(sender);
-                found = true;
             }
         }
         else
         {
+            boolean found = false;
             String action = args.remove(0);
             for (LandSubCommand command : commands)
             {
@@ -49,16 +48,16 @@ public class HelpCommand extends LandSubCommand
                     break;
                 }
             }
-        }
-        if (! found)
-        {
-            sender.sendMessage(ChatColor.RED + "");
+            if (!found)
+            {
+                sender.sendMessage(Messages.getString("error.help.not_found"));
+            }
         }
     }
 
     @Override
-    public void sendHelp(CommandSender sender)
+    protected String getHelpKey()
     {
-        sender.sendMessage(ChatColor.DARK_AQUA + messages.getString("help.help"));
+        return "help.help";
     }
 }

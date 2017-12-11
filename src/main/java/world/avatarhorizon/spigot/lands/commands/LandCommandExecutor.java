@@ -5,10 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import world.avatarhorizon.spigot.lands.commands.implementations.CreateCommand;
-import world.avatarhorizon.spigot.lands.commands.implementations.DescriptionCommand;
-import world.avatarhorizon.spigot.lands.commands.implementations.HelpCommand;
-import world.avatarhorizon.spigot.lands.commands.implementations.RenameCommand;
+import world.avatarhorizon.spigot.lands.commands.implementations.*;
 import world.avatarhorizon.spigot.lands.controllers.LandsManager;
 import world.avatarhorizon.spigot.lands.exceptions.LandCommandException;
 
@@ -31,6 +28,8 @@ public class LandCommandExecutor implements CommandExecutor
         subCommands.add(new CreateCommand(messages, logger, landsManager));
         subCommands.add(new DescriptionCommand(messages, logger, landsManager));
         subCommands.add(new RenameCommand(messages, logger, landsManager));
+        subCommands.add(new AddChunksCommand(messages, logger, landsManager, worldEditPlugin));
+        subCommands.add(new RemoveChunksCommand(messages, logger, landsManager, worldEditPlugin));
         subCommands.add(new HelpCommand(messages, logger, landsManager, subCommands));
     }
 
@@ -57,7 +56,7 @@ public class LandCommandExecutor implements CommandExecutor
                 }
                 catch (LandCommandException ex)
                 {
-                    sender.sendMessage(ChatColor.DARK_RED + ex.getMessage());
+                    sender.sendMessage(ex.getMessage());
                     return true;
                 }
             }

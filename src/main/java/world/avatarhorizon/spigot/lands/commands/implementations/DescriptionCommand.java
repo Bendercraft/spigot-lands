@@ -1,6 +1,5 @@
 package world.avatarhorizon.spigot.lands.commands.implementations;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import world.avatarhorizon.spigot.lands.commands.LandSubCommand;
@@ -59,7 +58,7 @@ public class DescriptionCommand extends LandSubCommand
         {
             Player p = (Player) sender;
             landsManager.setLandDescription(p.getWorld(), name, description);
-            sender.sendMessage(ChatColor.GREEN + messages.getString("success.description"));
+            sender.sendMessage(messages.getString("success.description"));
             logger.info("Lands \"" + name + "\" has been set a new description");
         }
         catch (LandManagementException e)
@@ -69,8 +68,9 @@ public class DescriptionCommand extends LandSubCommand
     }
 
     @Override
-    public void sendHelp(CommandSender sender)
+    protected String getHelpKey()
     {
-        sender.sendMessage(ChatColor.DARK_AQUA + messages.getString("help.description"));
+        return "help.description";
     }
+
 }
