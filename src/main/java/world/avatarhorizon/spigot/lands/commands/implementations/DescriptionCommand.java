@@ -71,6 +71,6 @@ public class DescriptionCommand extends LandSubCommand
     @Override
     public void sendHelp(CommandSender sender)
     {
-        sender.sendMessage(ChatColor.DARK_AQUA + "/lands description \"NAME\" \"DESCRIPTION\"");
+        sender.sendMessage(ChatColor.DARK_AQUA + messages.getString("help.description"));
     }
 }

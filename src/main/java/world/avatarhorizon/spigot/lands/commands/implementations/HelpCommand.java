@@ -59,6 +59,6 @@ public class HelpCommand extends LandSubCommand
     @Override
     public void sendHelp(CommandSender sender)
     {
-        sender.sendMessage(ChatColor.DARK_AQUA + "/lands help [subcommand]");
+        sender.sendMessage(ChatColor.DARK_AQUA + messages.getString("help.help"));
     }
 }

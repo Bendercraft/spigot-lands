@@ -70,6 +70,6 @@ public final class CreateCommand extends LandSubCommand
     @Override
     public void sendHelp(CommandSender sender)
     {
-        sender.sendMessage(ChatColor.DARK_AQUA + "/lands create \"NAME\"");
+        sender.sendMessage(ChatColor.DARK_AQUA + messages.getString("help.create"));
     }
 }
