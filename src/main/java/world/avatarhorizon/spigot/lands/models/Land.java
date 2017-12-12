@@ -1,5 +1,7 @@
 package world.avatarhorizon.spigot.lands.models;
 
+import net.minecraft.server.v1_12_R1.Chunk;
+
 import java.util.*;
 
 public class Land
@@ -7,7 +9,7 @@ public class Land
     private UUID id;
     private String name;
     private String description;
-    private List<ChunkLocation> chunks;
+    private Set<ChunkLocation> chunks;
     private ILandOwner owner;
 
     private Map<String, String> attributes;
@@ -26,7 +28,7 @@ public class Land
 
     private void initializeStructures()
     {
-        this.chunks = new LinkedList<>();
+        this.chunks = new HashSet<>();
         this.attributes = new HashMap<>();
     }
 
@@ -57,14 +59,19 @@ public class Land
         this.description = description;
     }
 
-    public List<ChunkLocation> getChunks()
+    public void addChunks(Set<ChunkLocation> chunks)
     {
-        return chunks;
+        this.chunks.addAll(chunks);
     }
 
-    public void setChunks(List<ChunkLocation> chunks)
+    public void removeChunks(Set<ChunkLocation> chunks)
     {
-        this.chunks = chunks;
+        this.chunks.removeAll(chunks);
+    }
+
+    public Set<ChunkLocation> getChunks()
+    {
+        return Collections.unmodifiableSet(chunks);
     }
 
     public ILandOwner getOwner()

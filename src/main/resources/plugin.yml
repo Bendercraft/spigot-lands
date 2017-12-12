@@ -3,7 +3,7 @@ main: world.avatarhorizon.spigot.lands.LandsPlugin
 authors: [Nokorbis, Koudja]
 version: 0.1.0
 depend: [WorldEdit]
-softdepend: []
+softdepend: [Multiverse]
 commands:
     lands:
         description: Lands main command

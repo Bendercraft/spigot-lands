@@ -25,7 +25,7 @@ public class LandsPlugin extends JavaPlugin
         }
         else
         {
-            landsManager = new LandsManager();
+            landsManager = new LandsManager(logger);
             LandCommandExecutor commandExecutor = new LandCommandExecutor(logger, landsManager, worldEditPlugin);
 
             getCommand("lands").setExecutor(commandExecutor);
@@ -36,6 +36,6 @@ public class LandsPlugin extends JavaPlugin
     @Override
     public void onDisable()
     {
-
+        getServer().getServicesManager().unregister(LandsManager.class, landsManager);
     }
 }

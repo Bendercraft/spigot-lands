@@ -4,19 +4,24 @@ import org.bukkit.World;
 import world.avatarhorizon.spigot.lands.exceptions.LandCreationException;
 import world.avatarhorizon.spigot.lands.exceptions.LandDescriptionException;
 import world.avatarhorizon.spigot.lands.exceptions.LandRenameException;
+import world.avatarhorizon.spigot.lands.models.ChunkLocation;
 import world.avatarhorizon.spigot.lands.models.Land;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.logging.Logger;
 
 public final class LandsManager
 {
+    private Logger logger;
     private Map<World, Map<String, Land>> lands;
 
-    public LandsManager()
+    public LandsManager(Logger logger)
     {
-        lands = new HashMap<>();
+        this.logger = logger;
+        this.lands = new HashMap<>();
     }
 
     /**
@@ -32,6 +37,22 @@ public final class LandsManager
             return null;
         }
         return Collections.unmodifiableMap(worldLands);
+    }
+
+    /**
+     * Get a land with the given name in the given world.
+     * @param world The world in which lies the Land
+     * @param name The name of the Land
+     * @return a Land if one was found. Null otherwise.
+     */
+    public Land getLand(World world, String name)
+    {
+        Map<String, Land> worldLands = lands.get(world);
+        if (worldLands == null || worldLands.isEmpty())
+        {
+            return null;
+        }
+        return worldLands.get(name);
     }
 
     /**
@@ -147,5 +168,42 @@ public final class LandsManager
         }
 
         land.setDescription(description);
+        //TODO : Save land into file
+    }
+
+    /**
+     * Add the chunks in the Land and save its file
+     * @param land The Land in which you want to add the chunks
+     * @param chunks The Chunks you want to add in the Land.
+     */
+    public void addChunksToLand(Land land, Set<ChunkLocation> chunks)
+    {
+        if (land != null && chunks != null)
+        {
+            land.addChunks(chunks);
+            //TODO : Save land into files
+        }
+        else
+        {
+            logger.warning("Tried to pass a null land or null chunks in addChunksToLands in LandsManager");
+        }
+    }
+
+    /**
+     * Remove the chunks in the Land and save its file
+     * @param land The Land in which you want to add the chunks
+     * @param chunks The Chunks you want to add in the Land.
+     */
+    public void removeChunksToLand(Land land, Set<ChunkLocation> chunks)
+    {
+        if (land != null && chunks != null)
+        {
+            land.removeChunks(chunks);
+            //TODO : Save land into files
+        }
+        else
+        {
+            logger.warning("Tried to pass a null land or null chunks in removeChunksToLands in LandsManager");
+        }
     }
 }
