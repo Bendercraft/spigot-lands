@@ -30,6 +30,10 @@ public class LandCommandExecutor implements CommandExecutor
         subCommands.add(new RenameCommand(messages, logger, landsManager));
         subCommands.add(new AddChunksCommand(messages, logger, landsManager, worldEditPlugin));
         subCommands.add(new RemoveChunksCommand(messages, logger, landsManager, worldEditPlugin));
+        subCommands.add(new SetTeleportCommand(messages, logger, landsManager));
+        subCommands.add(new TeleportCommand(messages, logger, landsManager));
+        subCommands.add(new DeleteCommand(messages, logger, landsManager));
+        subCommands.add(new ListCommand(messages, logger, landsManager));
         subCommands.add(new HelpCommand(messages, logger, landsManager, subCommands));
     }
 

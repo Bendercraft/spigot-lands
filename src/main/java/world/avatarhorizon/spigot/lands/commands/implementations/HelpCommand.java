@@ -2,6 +2,7 @@ package world.avatarhorizon.spigot.lands.commands.implementations;
 
 import com.mysql.jdbc.Messages;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import world.avatarhorizon.spigot.lands.commands.LandSubCommand;
 import world.avatarhorizon.spigot.lands.controllers.LandsManager;
 import world.avatarhorizon.spigot.lands.exceptions.LandCommandException;
@@ -28,6 +29,16 @@ public class HelpCommand extends LandSubCommand
     @Override
     public void execute(CommandSender sender, List<String> args) throws LandCommandException
     {
+        if (!sender.hasPermission("lands.admin.help"))
+        {
+            throw new LandCommandException(messages.getString("error.no_permission"));
+        }
+
+        if (!(sender instanceof Player))
+        {
+            throw new LandCommandException(messages.getString("error.player_requirement"));
+        }
+
         if (args.isEmpty())
         {
             for (LandSubCommand command : commands)
