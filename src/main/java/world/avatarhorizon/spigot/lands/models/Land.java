@@ -1,5 +1,6 @@
 package world.avatarhorizon.spigot.lands.models;
 
+import org.bukkit.Location;
 import org.bukkit.World;
 
 import java.util.*;
@@ -10,6 +11,7 @@ public class Land
     private String name;
     private World world;
     private String description;
+    private Location teleportLocation;
     private Set<ChunkLocation> chunks;
     private ILandOwner owner;
 
@@ -63,6 +65,16 @@ public class Land
     public String getDescription()
     {
         return description;
+    }
+
+    public Location getTeleportLocation()
+    {
+        return teleportLocation;
+    }
+
+    public void setTeleportLocation(Location teleportLocation)
+    {
+        this.teleportLocation = teleportLocation;
     }
 
     public void setDescription(String description)

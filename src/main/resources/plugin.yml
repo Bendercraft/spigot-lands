@@ -15,6 +15,7 @@ permissions:
         default: op
         children:
         - lands.admin.*
+        - lands.commands.*
     lands.admin.*:
         description: Permission to access every ADMIN command
         default: false
@@ -22,10 +23,15 @@ permissions:
         - lands.admin.create
         - lands.admin.rename
         - lands.admin.description
-        - lands.admin.help
         - lands.admin.addchunks
         - lands.admin.removechunks
-        - lands.admin.list
+        - lands.admin.delete
+    lands.commands.*:
+        description: Permission to access basic commands
+        default: false
+        children:
+        - lands.commands.help
+        - lands.commands.list
     lands.admin.create:
         description: Permission to create a new land
         default: false
@@ -35,15 +41,18 @@ permissions:
     lands.admin.description:
         description: Permission to define the description of a land
         default: false
-    lands.admin.help:
-        description: Permission to call the help command
-        default: false
     lands.admin.addchunks:
         description: Permission to add chunks to a land
         default: false
     lands.admin.removechunks:
         description: Permission to remove chunks to a land
         default: false
-    lands.admin.list:
+    lands.admin.delete:
+        description: Permission to delete a land.
+        default : false
+    lands.commands.list:
         description: Permission to list lands
+        default: false
+    lands.commands.help:
+        description: Permission to call the help command
         default: false

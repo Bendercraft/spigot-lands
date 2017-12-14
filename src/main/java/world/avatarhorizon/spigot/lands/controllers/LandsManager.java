@@ -2,6 +2,7 @@ package world.avatarhorizon.spigot.lands.controllers;
 
 import org.bukkit.World;
 import world.avatarhorizon.spigot.lands.exceptions.LandCreationException;
+import world.avatarhorizon.spigot.lands.exceptions.LandDeleteException;
 import world.avatarhorizon.spigot.lands.exceptions.LandDescriptionException;
 import world.avatarhorizon.spigot.lands.exceptions.LandRenameException;
 import world.avatarhorizon.spigot.lands.models.ChunkLocation;
@@ -164,7 +165,8 @@ public final class LandsManager
             throw new LandRenameException(LandRenameException.CAUSE_NO_LAND);
         }
 
-        if (getLand(worldLands, newName) != null)
+        Land other = getLand(worldLands, newName);
+        if (other != null && other != land)
         {
             throw new LandRenameException(LandRenameException.CAUSE_LAND_NAME_USED);
         }
@@ -236,5 +238,38 @@ public final class LandsManager
         {
             logger.warning("Tried to pass a null land or null chunks in removeChunksToLands in LandsManager");
         }
+    }
+
+    /**
+     * Delete a land
+     * @param world The world in which lies the land
+     * @param name The name of the land to delete
+     * @throws LandDeleteException
+     */
+    public void deleteLand(World world, String name) throws LandDeleteException
+    {
+        if (world == null)
+        {
+            throw new LandDeleteException(LandDeleteException.CAUSE_NULL_WORLD);
+        }
+        if (name == null || name.trim().equals(""))
+        {
+            throw new LandDeleteException(LandDeleteException.CAUSE_NULL_NAME);
+        }
+
+        Map<UUID, Land> worldLands = lands.get(world);
+        if (worldLands == null || worldLands.isEmpty())
+        {
+            throw new LandDeleteException(LandDeleteException.CAUSE_NO_LAND);
+        }
+
+        Land land = getLand(worldLands, name);
+        if (land == null)
+        {
+            throw new LandDeleteException(LandDeleteException.CAUSE_NO_LAND);
+        }
+
+        landPersister.delete(world, land);
+        worldLands.remove(land.getId());
     }
 }
