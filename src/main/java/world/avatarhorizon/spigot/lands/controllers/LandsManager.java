@@ -6,6 +6,7 @@ import world.avatarhorizon.spigot.lands.exceptions.LandDescriptionException;
 import world.avatarhorizon.spigot.lands.exceptions.LandRenameException;
 import world.avatarhorizon.spigot.lands.models.ChunkLocation;
 import world.avatarhorizon.spigot.lands.models.Land;
+import world.avatarhorizon.spigot.lands.persistence.ILandPersister;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,12 +16,14 @@ import java.util.logging.Logger;
 
 public final class LandsManager
 {
-    private Logger logger;
+    private final Logger logger;
+    private final ILandPersister landPersister;
     private Map<World, Map<String, Land>> lands;
 
-    public LandsManager(Logger logger)
+    public LandsManager(Logger logger, ILandPersister landPersister)
     {
         this.logger = logger;
+        this.landPersister = landPersister;
         this.lands = new HashMap<>();
     }
 
@@ -89,6 +92,7 @@ public final class LandsManager
         }
 
         worldLands.put(land.getName().toLowerCase(), land);
+        landPersister.save(world, land);
     }
 
     /**
@@ -131,9 +135,10 @@ public final class LandsManager
             throw new LandRenameException(LandRenameException.CAUSE_LAND_NAME_USED);
         }
 
-        land.setName(newName);
         worldLands.remove(oldName);
+        land.setName(newName);
         worldLands.put(newName.toLowerCase(), land);
+        landPersister.save(world, land);
     }
 
     /**
@@ -168,7 +173,7 @@ public final class LandsManager
         }
 
         land.setDescription(description);
-        //TODO : Save land into file
+        landPersister.save(world, land);
     }
 
     /**
@@ -176,12 +181,12 @@ public final class LandsManager
      * @param land The Land in which you want to add the chunks
      * @param chunks The Chunks you want to add in the Land.
      */
-    public void addChunksToLand(Land land, Set<ChunkLocation> chunks)
+    public void addChunksToLand(World world, Land land, Set<ChunkLocation> chunks)
     {
         if (land != null && chunks != null)
         {
             land.addChunks(chunks);
-            //TODO : Save land into files
+            landPersister.save(world, land);
         }
         else
         {
@@ -194,12 +199,12 @@ public final class LandsManager
      * @param land The Land in which you want to add the chunks
      * @param chunks The Chunks you want to add in the Land.
      */
-    public void removeChunksToLand(Land land, Set<ChunkLocation> chunks)
+    public void removeChunksFromLand(World world, Land land, Set<ChunkLocation> chunks)
     {
-        if (land != null && chunks != null)
+        if (world != null && land != null && chunks != null)
         {
             land.removeChunks(chunks);
-            //TODO : Save land into files
+            landPersister.save(world, land);
         }
         else
         {

@@ -6,6 +6,8 @@ import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 import world.avatarhorizon.spigot.lands.commands.LandCommandExecutor;
 import world.avatarhorizon.spigot.lands.controllers.LandsManager;
+import world.avatarhorizon.spigot.lands.persistence.ILandPersister;
+import world.avatarhorizon.spigot.lands.persistence.LandPersister;
 
 import java.util.logging.Logger;
 
@@ -25,7 +27,8 @@ public class LandsPlugin extends JavaPlugin
         }
         else
         {
-            landsManager = new LandsManager(logger);
+            ILandPersister landPersister = new LandPersister(getDataFolder(), logger);
+            landsManager = new LandsManager(logger, landPersister);
             LandCommandExecutor commandExecutor = new LandCommandExecutor(logger, landsManager, worldEditPlugin);
 
             getCommand("lands").setExecutor(commandExecutor);

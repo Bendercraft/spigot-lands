@@ -1,0 +1,52 @@
+package world.avatarhorizon.spigot.lands.persistence.serializers;
+
+import com.google.gson.*;
+import world.avatarhorizon.spigot.lands.models.ChunkLocation;
+import world.avatarhorizon.spigot.lands.models.Land;
+
+import java.lang.reflect.Type;
+import java.util.HashSet;
+import java.util.UUID;
+
+public class LandSerializer implements JsonSerializer<Land>, JsonDeserializer<Land>
+{
+    @Override
+    public Land deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext context) throws JsonParseException
+    {
+        JsonObject root = jsonElement.getAsJsonObject();
+        UUID id = UUID.fromString(root.get("id").getAsString());
+
+        Land land = new Land(id);
+        land.setName(root.get("name").getAsString());
+        land.setDescription(root.get("description").getAsString());
+
+        JsonArray array = root.get("chunks").getAsJsonArray();
+        HashSet<ChunkLocation> chunks = new HashSet<>();
+        for (JsonElement el : array)
+        {
+            ChunkLocation loc = context.deserialize(el, ChunkLocation.class);
+            chunks.add(loc);
+        }
+        land.addChunks(chunks);
+
+        return land;
+    }
+
+    @Override
+    public JsonElement serialize(Land land, Type type, JsonSerializationContext context)
+    {
+        JsonObject root = new JsonObject();
+        root.addProperty("id", land.getId().toString());
+        root.addProperty("name", land.getName());
+        root.addProperty("description", land.getDescription());
+        JsonArray chunks = new JsonArray();
+        for (ChunkLocation cl : land.getChunks())
+        {
+            JsonElement jOb = context.serialize(cl);
+            chunks.add(jOb);
+        }
+        root.add("chunks", chunks);
+
+        return root;
+    }
+}

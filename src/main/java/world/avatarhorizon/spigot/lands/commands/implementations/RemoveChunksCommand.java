@@ -79,7 +79,7 @@ public class RemoveChunksCommand extends LandSubCommand
 
         Set<ChunkLocation> chunks = getChunkLocations(player, matcher);
 
-        landsManager.removeChunksToLand(land, chunks);
+        landsManager.removeChunksFromLand(player.getWorld(), land, chunks);
         player.sendMessage(messages.getString("success.removechunks"));
         logger.info("Chunks removed from land " + name);
     }

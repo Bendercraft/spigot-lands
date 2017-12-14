@@ -77,7 +77,7 @@ public class AddChunksCommand extends LandSubCommand
 
         Set<ChunkLocation> chunks = getChunkLocations(player, matcher);
 
-        landsManager.addChunksToLand(land, chunks);
+        landsManager.addChunksToLand(player.getWorld(), land, chunks);
         player.sendMessage(messages.getString("success.addchunks"));
         logger.info("Chunks added to land " + name);
     }
