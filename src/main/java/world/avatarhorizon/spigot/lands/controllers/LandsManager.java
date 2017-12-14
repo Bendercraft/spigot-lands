@@ -8,10 +8,7 @@ import world.avatarhorizon.spigot.lands.models.ChunkLocation;
 import world.avatarhorizon.spigot.lands.models.Land;
 import world.avatarhorizon.spigot.lands.persistence.ILandPersister;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Logger;
 
 public final class LandsManager
@@ -24,7 +21,13 @@ public final class LandsManager
     {
         this.logger = logger;
         this.landPersister = landPersister;
-        this.lands = new HashMap<>();
+
+        this.loadDataFromFile();
+    }
+
+    private void loadDataFromFile()
+    {
+        this.lands = landPersister.loadAll();
     }
 
     /**
@@ -56,6 +59,11 @@ public final class LandsManager
             return null;
         }
         return worldLands.get(name);
+    }
+
+    public Land getLand(World world, UUID id)
+    {
+        return null;
     }
 
     /**

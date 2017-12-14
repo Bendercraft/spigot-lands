@@ -118,7 +118,6 @@ public class AddChunksCommand extends LandSubCommand
             for (Vector2D vec : region.getChunks())
             {
                 ChunkLocation cl = new ChunkLocation();
-                cl.setWorld(player.getWorld());
                 cl.setX(vec.getBlockX());
                 cl.setY(vec.getBlockZ());
                 chunks.add(cl);
@@ -135,7 +134,6 @@ public class AddChunksCommand extends LandSubCommand
         Chunk chunk = p.getLocation().getChunk();
 
         ChunkLocation cl = new ChunkLocation();
-        cl.setWorld(chunk.getWorld());
         cl.setX(chunk.getX());
         cl.setY(chunk.getZ());
         chunks.add(cl);
@@ -156,7 +154,6 @@ public class AddChunksCommand extends LandSubCommand
             int y = Integer.parseInt(pos[1]);
 
             ChunkLocation cl = new ChunkLocation();
-            cl.setWorld(p.getWorld());
             cl.setX(x);
             cl.setY(y);
 

@@ -8,23 +8,12 @@ import org.bukkit.World;
  */
 public class ChunkLocation
 {
-    private World world;
     private int x;
     private int y;
 
-    public Chunk getChunk()
+    public Chunk getChunk(World world)
     {
         return world.getChunkAt(x, y);
-    }
-
-    public World getWorld()
-    {
-        return world;
-    }
-
-    public void setWorld(World world)
-    {
-        this.world = world;
     }
 
     public int getX()
@@ -56,15 +45,13 @@ public class ChunkLocation
         ChunkLocation that = (ChunkLocation) o;
 
         if (x != that.x) return false;
-        if (y != that.y) return false;
-        return world.equals(that.world);
+        return y == that.y;
     }
 
     @Override
     public int hashCode()
     {
-        int result = world.getUID().hashCode();
-        result = 31 * result + x;
+        int result = x;
         result = 31 * result + y;
         return result;
     }

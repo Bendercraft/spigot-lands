@@ -7,6 +7,9 @@ import java.lang.reflect.Type;
 
 public class ChunkSerializer implements JsonSerializer<ChunkLocation>, JsonDeserializer<ChunkLocation>
 {
+    /*
+
+     */
     @Override
     public ChunkLocation deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext context) throws JsonParseException
     {

@@ -1,6 +1,6 @@
 package world.avatarhorizon.spigot.lands.models;
 
-import net.minecraft.server.v1_12_R1.Chunk;
+import org.bukkit.World;
 
 import java.util.*;
 
@@ -8,6 +8,7 @@ public class Land
 {
     private UUID id;
     private String name;
+    private World world;
     private String description;
     private Set<ChunkLocation> chunks;
     private ILandOwner owner;
@@ -47,6 +48,16 @@ public class Land
     public void setName(String name)
     {
         this.name = name;
+    }
+
+    public World getWorld()
+    {
+        return world;
+    }
+
+    public void setWorld(World world)
+    {
+        this.world = world;
     }
 
     public String getDescription()

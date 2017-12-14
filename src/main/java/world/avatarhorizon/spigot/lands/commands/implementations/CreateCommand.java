@@ -1,6 +1,5 @@
 package world.avatarhorizon.spigot.lands.commands.implementations;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import world.avatarhorizon.spigot.lands.commands.LandSubCommand;
@@ -56,6 +55,7 @@ public final class CreateCommand extends LandSubCommand
             Player p = (Player) sender;
             Land land = new Land();
             land.setName(name);
+            land.setWorld(p.getWorld());
             landsManager.addLandToWorld(p.getWorld(), land);
             sender.sendMessage(messages.getString("success.creation"));
             logger.info("Lands \"" + land.getName() + "\" created.");

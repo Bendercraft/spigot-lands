@@ -1,6 +1,8 @@
 package world.avatarhorizon.spigot.lands.persistence.serializers;
 
 import com.google.gson.*;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
 import world.avatarhorizon.spigot.lands.models.ChunkLocation;
 import world.avatarhorizon.spigot.lands.models.Land;
 
@@ -15,10 +17,20 @@ public class LandSerializer implements JsonSerializer<Land>, JsonDeserializer<La
     {
         JsonObject root = jsonElement.getAsJsonObject();
         UUID id = UUID.fromString(root.get("id").getAsString());
-
         Land land = new Land(id);
         land.setName(root.get("name").getAsString());
-        land.setDescription(root.get("description").getAsString());
+
+        World world = Bukkit.getWorld(root.get("world").getAsString());
+        if (world != null)
+        {
+            land.setWorld(world);
+        }
+
+        JsonElement desc = root.get("description");
+        if (desc != null)
+        {
+            land.setDescription(desc.getAsString());
+        }
 
         JsonArray array = root.get("chunks").getAsJsonArray();
         HashSet<ChunkLocation> chunks = new HashSet<>();
@@ -39,6 +51,8 @@ public class LandSerializer implements JsonSerializer<Land>, JsonDeserializer<La
         root.addProperty("id", land.getId().toString());
         root.addProperty("name", land.getName());
         root.addProperty("description", land.getDescription());
+        root.addProperty("world", land.getWorld().getName());
+
         JsonArray chunks = new JsonArray();
         for (ChunkLocation cl : land.getChunks())
         {
