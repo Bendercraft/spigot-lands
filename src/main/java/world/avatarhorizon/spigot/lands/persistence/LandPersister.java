@@ -13,6 +13,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 public class LandPersister implements ILandPersister
@@ -81,9 +82,9 @@ public class LandPersister implements ILandPersister
     }
 
     @Override
-    public Map<World, Map<String, Land>> loadAll()
+    public Map<World, Map<UUID, Land>> loadAll()
     {
-        Map<World, Map<String,Land>> map = new HashMap<>();
+        Map<World, Map<UUID, Land>> map = new HashMap<>();
         File[] folders = dataFolder.listFiles();
         if (folders != null)
         {
@@ -99,7 +100,7 @@ public class LandPersister implements ILandPersister
         return map;
     }
 
-    private void handleWorld(Map<World, Map<String, Land>> map, File worldDir)
+    private void handleWorld(Map<World, Map<UUID, Land>> map, File worldDir)
     {
         String worldName = worldDir.getName();
         World world = Bukkit.getWorld(worldName);
@@ -109,7 +110,7 @@ public class LandPersister implements ILandPersister
         }
         else
         {
-            Map<String, Land> landsMap = new HashMap<>();
+            Map<UUID, Land> landsMap = new HashMap<>();
 
             File[] files = worldDir.listFiles();
             if (files != null)
@@ -126,7 +127,7 @@ public class LandPersister implements ILandPersister
         }
     }
 
-    private void handleLand(Map<String, Land> landsMap, File landFile)
+    private void handleLand(Map<UUID, Land> landsMap, File landFile)
     {
         if (landFile.isFile())
         {
@@ -134,7 +135,7 @@ public class LandPersister implements ILandPersister
             {
                 InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
                 Land land = gson.fromJson(reader, Land.class);
-                landsMap.put(land.getName().toLowerCase(), land);
+                landsMap.put(land.getId(), land);
             }
             catch (IOException e)
             {

@@ -15,7 +15,7 @@ public final class LandsManager
 {
     private final Logger logger;
     private final ILandPersister landPersister;
-    private Map<World, Map<String, Land>> lands;
+    private Map<World, Map<UUID, Land>> lands;
 
     public LandsManager(Logger logger, ILandPersister landPersister)
     {
@@ -35,9 +35,9 @@ public final class LandsManager
      * @param world The world from which you want the lands
      * @return A unmodifiable map where the key is the name of the land and the value is the Land or null if that world does not have any land.
      */
-    public Map<String, Land> getLandsForWorld(World world)
+    public Map<UUID, Land> getLandsForWorld(World world)
     {
-        Map<String, Land> worldLands = lands.get(world);
+        Map<UUID, Land> worldLands = lands.get(world);
         if (worldLands == null || worldLands.isEmpty())
         {
             return null;
@@ -53,17 +53,44 @@ public final class LandsManager
      */
     public Land getLand(World world, String name)
     {
-        Map<String, Land> worldLands = lands.get(world);
+        Map<UUID, Land> worldLands = lands.get(world);
         if (worldLands == null || worldLands.isEmpty())
         {
             return null;
         }
-        return worldLands.get(name);
+
+        Land land = getLand(worldLands, name);
+        if (land != null) return land;
+        return null;
     }
 
+    private Land getLand(Map<UUID, Land> worldLands, String name)
+    {
+        name = name.toLowerCase();
+        for (Land land : worldLands.values())
+        {
+            if (land.getName().toLowerCase().equals(name))
+            {
+                return land;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get the land according to the given id in the given world
+     * @param world The world in which to look up
+     * @param id The id matching the land
+     * @return a Land if one was found. null otherwhise.
+     */
     public Land getLand(World world, UUID id)
     {
-        return null;
+        Map<UUID, Land> worldLands = lands.get(world);
+        if (worldLands == null || worldLands.isEmpty())
+        {
+            return null;
+        }
+        return worldLands.get(id);
     }
 
     /**
@@ -87,19 +114,19 @@ public final class LandsManager
             throw new LandCreationException(LandCreationException.CAUSE_LAND_NO_NAME);
         }
 
-        Map<String, Land> worldLands = lands.get(world);
+        Map<UUID, Land> worldLands = lands.get(world);
         if (worldLands == null)
         {
             worldLands = new HashMap<>();
             lands.put(world, worldLands);
         }
 
-        if (worldLands.containsKey(land.getName().toLowerCase()))
+        if (getLand(worldLands, land.getName()) != null)
         {
             throw new LandCreationException(LandCreationException.CAUSE_LAND_NAME_USED);
         }
 
-        worldLands.put(land.getName().toLowerCase(), land);
+        worldLands.put(land.getId(), land);
         landPersister.save(world, land);
     }
 
@@ -125,27 +152,24 @@ public final class LandsManager
             throw new LandRenameException(LandRenameException.CAUSE_NULL_NEW_NAME);
         }
 
-        Map<String, Land> worldLands = lands.get(world);
+        Map<UUID, Land> worldLands = lands.get(world);
         if (worldLands == null || worldLands.isEmpty())
         {
             throw new LandRenameException(LandRenameException.CAUSE_NO_LAND);
         }
 
-        oldName = oldName.toLowerCase();
-        Land land = worldLands.get(oldName);
+        Land land = getLand(worldLands, oldName);
         if (land == null)
         {
             throw new LandRenameException(LandRenameException.CAUSE_NO_LAND);
         }
 
-        if (worldLands.containsKey(newName.toLowerCase()))
+        if (getLand(worldLands, newName) != null)
         {
             throw new LandRenameException(LandRenameException.CAUSE_LAND_NAME_USED);
         }
 
-        worldLands.remove(oldName);
         land.setName(newName);
-        worldLands.put(newName.toLowerCase(), land);
         landPersister.save(world, land);
     }
 
@@ -168,13 +192,7 @@ public final class LandsManager
         }
 
         //No need to check if description is empty or not. Optional attribute
-        Map<String, Land> worldLands = lands.get(world);
-        if (worldLands == null || worldLands.isEmpty())
-        {
-            throw new LandDescriptionException(LandDescriptionException.CAUSE_NO_LAND);
-        }
-
-        Land land = worldLands.get(name.toLowerCase());
+        Land land = getLand(world, name);
         if (land == null)
         {
             throw new LandDescriptionException(LandDescriptionException.CAUSE_NO_LAND);
