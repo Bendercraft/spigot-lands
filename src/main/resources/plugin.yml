@@ -26,12 +26,14 @@ permissions:
         - lands.admin.addchunks
         - lands.admin.removechunks
         - lands.admin.delete
+        - lands.admin.setteleport
     lands.commands.*:
         description: Permission to access basic commands
         default: false
         children:
         - lands.commands.help
         - lands.commands.list
+        - lands.commands.teleport
     lands.admin.create:
         description: Permission to create a new land
         default: false
@@ -49,10 +51,16 @@ permissions:
         default: false
     lands.admin.delete:
         description: Permission to delete a land.
-        default : false
+        default: false
+    lands.admin.setteleport:
+        description: Permission to define the teleport location of a land
+        default: false
     lands.commands.list:
         description: Permission to list lands
         default: false
     lands.commands.help:
         description: Permission to call the help command
+        default: false
+    lands.commands.teleport:
+        description: Permission to teleport to a land's location
         default: false

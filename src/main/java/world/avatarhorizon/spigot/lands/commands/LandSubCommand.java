@@ -2,6 +2,7 @@ package world.avatarhorizon.spigot.lands.commands;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import world.avatarhorizon.spigot.lands.controllers.LandsManager;
 import world.avatarhorizon.spigot.lands.exceptions.LandCommandException;
 
@@ -53,4 +54,20 @@ public abstract class LandSubCommand
     }
 
     protected abstract String getHelpKey();
+
+    protected void validatePlayer(CommandSender sender) throws LandCommandException
+    {
+        if (!(sender instanceof Player))
+        {
+            throw new LandCommandException(messages.getString("error.player_requirement"));
+        }
+    }
+
+    protected void validatePermission(CommandSender sender, String perm) throws LandCommandException
+    {
+        if (!sender.hasPermission(perm))
+        {
+            throw new LandCommandException(messages.getString("error.no_permission"));
+        }
+    }
 }

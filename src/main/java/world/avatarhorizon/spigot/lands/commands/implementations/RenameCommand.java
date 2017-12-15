@@ -30,15 +30,8 @@ public final class RenameCommand extends LandSubCommand
     @Override
     public void execute(CommandSender sender, List<String> args) throws LandCommandException
     {
-        if (!sender.hasPermission("lands.admin.rename"))
-        {
-            throw new LandCommandException(messages.getString("error.no_permission"));
-        }
-
-        if (!(sender instanceof Player))
-        {
-            throw new LandCommandException(messages.getString("error.player_requirement"));
-        }
+        validatePermission(sender, "lands.admin.rename");
+        validatePlayer(sender);
 
         String temp = String.join(" ", args).trim();
         if (temp == null || temp.equals(""))

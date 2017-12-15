@@ -29,15 +29,8 @@ public class HelpCommand extends LandSubCommand
     @Override
     public void execute(CommandSender sender, List<String> args) throws LandCommandException
     {
-        if (!sender.hasPermission("lands.admin.help"))
-        {
-            throw new LandCommandException(messages.getString("error.no_permission"));
-        }
-
-        if (!(sender instanceof Player))
-        {
-            throw new LandCommandException(messages.getString("error.player_requirement"));
-        }
+        validatePermission(sender, "lands.commands.help");
+        validatePlayer(sender);
 
         if (args.isEmpty())
         {

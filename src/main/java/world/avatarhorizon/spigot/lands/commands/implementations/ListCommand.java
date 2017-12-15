@@ -25,10 +25,7 @@ public class ListCommand extends LandSubCommand
     @Override
     public void execute(CommandSender sender, List<String> args) throws LandCommandException
     {
-        if (!sender.hasPermission("lands.admin.list"))
-        {
-            throw new LandCommandException(messages.getString("error.no_permission"));
-        }
+        validatePermission(sender, "lands.commands.list");
 
         World world = null;
 
@@ -38,15 +35,12 @@ public class ListCommand extends LandSubCommand
             world = Bukkit.getWorld(name);
         }
 
-        if (!(sender instanceof Player) && world == null)
-        {
-            throw new LandCommandException(messages.getString("error.player_requirement"));
-        }
-
         if (world == null)
         {
+            validatePlayer(sender);
             world = ((Player)sender).getWorld();
         }
+
         Map<UUID, Land> lands = landsManager.getLandsForWorld(world);
         if (lands == null || lands.isEmpty())
         {

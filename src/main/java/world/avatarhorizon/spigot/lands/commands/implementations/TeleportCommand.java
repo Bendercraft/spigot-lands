@@ -22,7 +22,8 @@ public class TeleportCommand extends LandSubCommand
     @Override
     public void execute(CommandSender sender, List<String> args) throws LandCommandException
     {
-
+        validatePermission(sender,"lands.commands.teleport");
+        validatePlayer(sender);
     }
 
     @Override
