@@ -2,14 +2,14 @@ package world.avatarhorizon.spigot.lands.exceptions;
 
 public class LandManagementException extends LandException
 {
-    private String cause;
+    private ExceptionCause cause;
 
-    public LandManagementException(String causeKey)
+    public LandManagementException(ExceptionCause causeKey)
     {
         this.cause = causeKey;
     }
 
-    public String getCauseKey()
+    public ExceptionCause getCauseKey()
     {
         return cause;
     }

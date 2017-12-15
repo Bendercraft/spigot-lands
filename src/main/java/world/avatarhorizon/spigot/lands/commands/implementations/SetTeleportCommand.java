@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import world.avatarhorizon.spigot.lands.commands.LandSubCommand;
 import world.avatarhorizon.spigot.lands.controllers.LandsManager;
 import world.avatarhorizon.spigot.lands.exceptions.LandCommandException;
-import world.avatarhorizon.spigot.lands.exceptions.LandTeleportLocationException;
+import world.avatarhorizon.spigot.lands.exceptions.LandManagementException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,9 +59,9 @@ public class SetTeleportCommand extends LandSubCommand
                 landsManager.setLandTeleportLocation(p.getWorld(), name, loc);
                 sender.sendMessage(messages.getString("success.setteleport"));
             }
-            catch (LandTeleportLocationException e)
+            catch (LandManagementException e)
             {
-                throw new LandCommandException(messages.getString(e.getCauseKey()));
+                throw new LandCommandException(messages.getString(e.getCauseKey().getKey()));
             }
         }
         else

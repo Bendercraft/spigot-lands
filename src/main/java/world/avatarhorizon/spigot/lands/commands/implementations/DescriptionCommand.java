@@ -56,7 +56,7 @@ public class DescriptionCommand extends LandSubCommand
         }
         catch (LandManagementException e)
         {
-            throw new LandCommandException(messages.getString(e.getCauseKey()));
+            throw new LandCommandException(messages.getString(e.getCauseKey().getKey()));
         }
     }
 

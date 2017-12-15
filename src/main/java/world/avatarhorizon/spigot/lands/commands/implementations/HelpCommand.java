@@ -2,7 +2,6 @@ package world.avatarhorizon.spigot.lands.commands.implementations;
 
 import com.mysql.jdbc.Messages;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import world.avatarhorizon.spigot.lands.commands.LandSubCommand;
 import world.avatarhorizon.spigot.lands.controllers.LandsManager;
 import world.avatarhorizon.spigot.lands.exceptions.LandCommandException;

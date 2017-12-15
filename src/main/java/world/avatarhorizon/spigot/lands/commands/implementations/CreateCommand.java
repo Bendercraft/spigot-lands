@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 import world.avatarhorizon.spigot.lands.commands.LandSubCommand;
 import world.avatarhorizon.spigot.lands.controllers.LandsManager;
 import world.avatarhorizon.spigot.lands.exceptions.LandCommandException;
-import world.avatarhorizon.spigot.lands.exceptions.LandCreationException;
+import world.avatarhorizon.spigot.lands.exceptions.LandManagementException;
 import world.avatarhorizon.spigot.lands.models.Land;
 
 import java.util.List;
@@ -31,7 +31,7 @@ public final class CreateCommand extends LandSubCommand
         validatePlayer(sender);
 
         String temp = String.join(" ", args).trim();
-        if (temp == null || temp.equals(""))
+        if (temp.equals(""))
         {
             throw new LandCommandException(messages.getString("error.creation.empty_params"));
         }
@@ -53,9 +53,9 @@ public final class CreateCommand extends LandSubCommand
             sender.sendMessage(messages.getString("success.creation"));
             logger.info("Lands \"" + land.getName() + "\" created.");
         }
-        catch (LandCreationException e)
+        catch (LandManagementException e)
         {
-            throw new LandCommandException(messages.getString(e.getCauseKey()));
+            throw new LandCommandException(messages.getString(e.getCauseKey().getKey()));
         }
     }
 

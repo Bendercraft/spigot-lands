@@ -32,7 +32,7 @@ public class DeleteCommand extends LandSubCommand
         validatePlayer(sender);
 
         String temp = String.join(" ", args).trim();
-        if (temp == null || temp.equals(""))
+        if (temp.equals(""))
         {
             throw new LandCommandException(messages.getString("error.delete.empty_params"));
         }
@@ -53,7 +53,7 @@ public class DeleteCommand extends LandSubCommand
         }
         catch (LandManagementException e)
         {
-            throw new LandCommandException(messages.getString(e.getCauseKey()));
+            throw new LandCommandException(messages.getString(e.getCauseKey().getKey()));
         }
     }
 

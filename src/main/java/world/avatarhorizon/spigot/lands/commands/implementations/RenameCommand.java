@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 import world.avatarhorizon.spigot.lands.commands.LandSubCommand;
 import world.avatarhorizon.spigot.lands.controllers.LandsManager;
 import world.avatarhorizon.spigot.lands.exceptions.LandCommandException;
-import world.avatarhorizon.spigot.lands.exceptions.LandRenameException;
+import world.avatarhorizon.spigot.lands.exceptions.LandManagementException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ public final class RenameCommand extends LandSubCommand
         validatePlayer(sender);
 
         String temp = String.join(" ", args).trim();
-        if (temp == null || temp.equals(""))
+        if (temp.equals(""))
         {
             throw new LandCommandException(messages.getString("error.rename.empty_params"));
         }
@@ -54,9 +54,9 @@ public final class RenameCommand extends LandSubCommand
             sender.sendMessage(messages.getString("success.rename"));
             logger.info("Lands \"" + oldName + "\" has been renamed as \"" + newName + "\"");
         }
-        catch (LandRenameException e)
+        catch (LandManagementException e)
         {
-            throw new LandCommandException(messages.getString(e.getCauseKey()));
+            throw new LandCommandException(messages.getString(e.getCauseKey().getKey()));
         }
     }
 

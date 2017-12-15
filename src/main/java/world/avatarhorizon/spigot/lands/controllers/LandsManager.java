@@ -96,33 +96,27 @@ public final class LandsManager
      * Add a land to a world
      * @param world The world in which you want to add the land
      * @param land The land you want to add in the world
-     * @throws LandCreationException if was not able to add the land for any reason.
      */
-    public void addLandToWorld(World world, Land land) throws LandCreationException
+    public void addLandToWorld(World world, Land land) throws LandManagementException
     {
         if (world == null)
         {
-            throw new LandCreationException(LandCreationException.CAUSE_NULL_WORLD);
+            throw new LandManagementException(ExceptionCause.NULL_WORLD);
         }
         if (land == null)
         {
-            throw new LandCreationException(LandCreationException.CAUSE_NULL_LAND);
+            throw new LandManagementException(ExceptionCause.NULL_LAND);
         }
         if (land.getName() == null || land.getName().trim().equals(""))
         {
-            throw new LandCreationException(LandCreationException.CAUSE_LAND_NO_NAME);
+            throw new LandManagementException(ExceptionCause.NULL_NAME);
         }
 
-        Map<UUID, Land> worldLands = lands.get(world);
-        if (worldLands == null)
-        {
-            worldLands = new HashMap<>();
-            lands.put(world, worldLands);
-        }
+        Map<UUID, Land> worldLands = lands.computeIfAbsent(world, k -> new HashMap<>());
 
         if (getLand(worldLands, land.getName()) != null)
         {
-            throw new LandCreationException(LandCreationException.CAUSE_LAND_NAME_USED);
+            throw new LandManagementException(ExceptionCause.NAME_USED);
         }
 
         worldLands.put(land.getId(), land);
@@ -134,39 +128,38 @@ public final class LandsManager
      * @param world The world in which the land we want to edit lies
      * @param oldName The name of the land we want to edit
      * @param newName The new name we want to set to the land
-     * @throws LandRenameException if any error happened during the renaming.
      */
-    public void renameLandInWorld(World world, String oldName, String newName) throws LandRenameException
+    public void renameLandInWorld(World world, String oldName, String newName) throws LandManagementException
     {
         if (world == null)
         {
-            throw new LandRenameException(LandRenameException.CAUSE_NULL_WORLD);
+            throw new LandManagementException(ExceptionCause.NULL_WORLD);
         }
         if (oldName == null || oldName.trim().equals(""))
         {
-            throw new LandRenameException(LandRenameException.CAUSE_NULL_OLD_NAME);
+            throw new LandManagementException(ExceptionCause.NULL_OLD_NAME);
         }
         if (newName == null || newName.trim().equals(""))
         {
-            throw new LandRenameException(LandRenameException.CAUSE_NULL_NEW_NAME);
+            throw new LandManagementException(ExceptionCause.NULL_NEW_NAME);
         }
 
         Map<UUID, Land> worldLands = lands.get(world);
         if (worldLands == null || worldLands.isEmpty())
         {
-            throw new LandRenameException(LandRenameException.CAUSE_NO_LAND);
+            throw new LandManagementException(ExceptionCause.NO_LAND);
         }
 
         Land land = getLand(worldLands, oldName);
         if (land == null)
         {
-            throw new LandRenameException(LandRenameException.CAUSE_NO_LAND);
+            throw new LandManagementException(ExceptionCause.NO_LAND);
         }
 
         Land other = getLand(worldLands, newName);
         if (other != null && other != land)
         {
-            throw new LandRenameException(LandRenameException.CAUSE_LAND_NAME_USED);
+            throw new LandManagementException(ExceptionCause.NAME_USED);
         }
 
         land.setName(newName);
@@ -178,24 +171,23 @@ public final class LandsManager
      * @param world The world in which the Land lies
      * @param name The name of the Land
      * @param description The description to set
-     * @throws LandDescriptionException
      */
-    public void setLandDescription(World world, String name, String description) throws LandDescriptionException
+    public void setLandDescription(World world, String name, String description) throws LandManagementException
     {
         if (world == null)
         {
-            throw new LandDescriptionException(LandDescriptionException.CAUSE_NULL_WORLD);
+            throw new LandManagementException(ExceptionCause.NULL_WORLD);
         }
         if (name == null || name.trim().equals(""))
         {
-            throw new LandDescriptionException(LandDescriptionException.CAUSE_NULL_NAME);
+            throw new LandManagementException(ExceptionCause.NULL_NAME);
         }
 
         //No need to check if description is empty or not. Optional attribute
         Land land = getLand(world, name);
         if (land == null)
         {
-            throw new LandDescriptionException(LandDescriptionException.CAUSE_NO_LAND);
+            throw new LandManagementException(ExceptionCause.NO_LAND);
         }
 
         land.setDescription(description);
@@ -242,29 +234,28 @@ public final class LandsManager
      * Delete a land
      * @param world The world in which lies the land
      * @param name The name of the land to delete
-     * @throws LandDeleteException
      */
-    public void deleteLand(World world, String name) throws LandDeleteException
+    public void deleteLand(World world, String name) throws LandManagementException
     {
         if (world == null)
         {
-            throw new LandDeleteException(LandDeleteException.CAUSE_NULL_WORLD);
+            throw new LandManagementException(ExceptionCause.NULL_WORLD);
         }
         if (name == null || name.trim().equals(""))
         {
-            throw new LandDeleteException(LandDeleteException.CAUSE_NULL_NAME);
+            throw new LandManagementException(ExceptionCause.NULL_NAME);
         }
 
         Map<UUID, Land> worldLands = lands.get(world);
         if (worldLands == null || worldLands.isEmpty())
         {
-            throw new LandDeleteException(LandDeleteException.CAUSE_NO_LAND);
+            throw new LandManagementException(ExceptionCause.NO_LAND);
         }
 
         Land land = getLand(worldLands, name);
         if (land == null)
         {
-            throw new LandDeleteException(LandDeleteException.CAUSE_NO_LAND);
+            throw new LandManagementException(ExceptionCause.NO_LAND);
         }
 
         landPersister.delete(world, land);
@@ -276,23 +267,22 @@ public final class LandsManager
      * @param world
      * @param name
      * @param loc
-     * @throws LandTeleportLocationException
      */
-    public void setLandTeleportLocation(World world, String name, Location loc) throws LandTeleportLocationException
+    public void setLandTeleportLocation(World world, String name, Location loc) throws LandManagementException
     {
         if (world == null)
         {
-            throw new LandTeleportLocationException(LandTeleportLocationException.CAUSE_NULL_WORLD);
+            throw new LandManagementException(ExceptionCause.NULL_WORLD);
         }
         if (name == null || name.trim().equals(""))
         {
-            throw new LandTeleportLocationException(LandTeleportLocationException.CAUSE_NULL_NAME);
+            throw new LandManagementException(ExceptionCause.NULL_NAME);
         }
 
         Land land = getLand(world, name);
         if (land == null)
         {
-            throw new LandTeleportLocationException(LandTeleportLocationException.CAUSE_NO_LAND);
+            throw new LandManagementException(ExceptionCause.NO_LAND);
         }
 
         land.setTeleportLocation(loc);
