@@ -36,7 +36,7 @@ public class SetTeleportCommand extends LandSubCommand
         String temp = String.join(" ", args).trim();
         if (temp == null || temp.equals(""))
         {
-            throw new LandCommandException(messages.getString("error.setteleport.empty_params"));
+            throw new LandCommandException(messages.getString("error.empty_params"));
         }
 
         Matcher matcher = SETTELEPORT_PATTERN.matcher(temp);

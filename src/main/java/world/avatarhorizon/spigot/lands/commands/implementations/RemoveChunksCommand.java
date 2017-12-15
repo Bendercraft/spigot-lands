@@ -47,7 +47,7 @@ public class RemoveChunksCommand extends LandSubCommand
         String temp = String.join(" ", args).trim();
         if (temp == null || temp.equals(""))
         {
-            throw new LandCommandException(messages.getString("error.removechunks.empty_params"));
+            throw new LandCommandException(messages.getString("error.empty_params"));
         }
 
         Matcher matcher = COMMAND_PATTERN.matcher(temp);

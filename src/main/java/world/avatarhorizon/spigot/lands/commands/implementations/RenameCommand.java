@@ -35,7 +35,7 @@ public final class RenameCommand extends LandSubCommand
         String temp = String.join(" ", args).trim();
         if (temp.equals(""))
         {
-            throw new LandCommandException(messages.getString("error.rename.empty_params"));
+            throw new LandCommandException(messages.getString("error.empty_params"));
         }
 
         Matcher matcher = RENAME_PATTERN.matcher(temp);

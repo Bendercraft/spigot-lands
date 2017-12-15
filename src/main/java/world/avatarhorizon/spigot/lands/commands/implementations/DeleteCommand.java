@@ -34,7 +34,7 @@ public class DeleteCommand extends LandSubCommand
         String temp = String.join(" ", args).trim();
         if (temp.equals(""))
         {
-            throw new LandCommandException(messages.getString("error.delete.empty_params"));
+            throw new LandCommandException(messages.getString("error.empty_params"));
         }
 
         Matcher matcher = DELETE_PATTERN.matcher(temp);

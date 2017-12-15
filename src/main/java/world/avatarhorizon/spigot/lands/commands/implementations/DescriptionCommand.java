@@ -33,9 +33,9 @@ public class DescriptionCommand extends LandSubCommand
         validatePlayer(sender);
 
         String temp = String.join(" ", args).trim();
-        if (temp == null || temp.equals(""))
+        if (temp.equals(""))
         {
-            throw new LandCommandException(messages.getString("error.description.empty_params"));
+            throw new LandCommandException(messages.getString("error.empty_params"));
         }
 
         Matcher matcher = DESCRIPTION_PATTERN.matcher(temp);

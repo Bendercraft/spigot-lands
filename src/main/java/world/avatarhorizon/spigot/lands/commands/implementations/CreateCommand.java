@@ -33,7 +33,7 @@ public final class CreateCommand extends LandSubCommand
         String temp = String.join(" ", args).trim();
         if (temp.equals(""))
         {
-            throw new LandCommandException(messages.getString("error.creation.empty_params"));
+            throw new LandCommandException(messages.getString("error.empty_params"));
         }
 
         Matcher matcher = NAME_PATTERN.matcher(temp);

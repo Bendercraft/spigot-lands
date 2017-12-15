@@ -46,7 +46,7 @@ public class AddChunksCommand extends LandSubCommand
         String temp = String.join(" ", args).trim();
         if (temp.equals(""))
         {
-            throw new LandCommandException(messages.getString("error.addchunks.empty_params"));
+            throw new LandCommandException(messages.getString("error.empty_params"));
         }
 
         Matcher matcher = COMMAND_PATTERN.matcher(temp);
