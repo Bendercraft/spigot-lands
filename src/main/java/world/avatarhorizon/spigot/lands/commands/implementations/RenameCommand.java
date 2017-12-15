@@ -1,6 +1,5 @@
 package world.avatarhorizon.spigot.lands.commands.implementations;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import world.avatarhorizon.spigot.lands.commands.LandSubCommand;

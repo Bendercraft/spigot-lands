@@ -1,10 +1,8 @@
 package world.avatarhorizon.spigot.lands.controllers;
 
+import org.bukkit.Location;
 import org.bukkit.World;
-import world.avatarhorizon.spigot.lands.exceptions.LandCreationException;
-import world.avatarhorizon.spigot.lands.exceptions.LandDeleteException;
-import world.avatarhorizon.spigot.lands.exceptions.LandDescriptionException;
-import world.avatarhorizon.spigot.lands.exceptions.LandRenameException;
+import world.avatarhorizon.spigot.lands.exceptions.*;
 import world.avatarhorizon.spigot.lands.models.ChunkLocation;
 import world.avatarhorizon.spigot.lands.models.Land;
 import world.avatarhorizon.spigot.lands.persistence.ILandPersister;
@@ -271,5 +269,33 @@ public final class LandsManager
 
         landPersister.delete(world, land);
         worldLands.remove(land.getId());
+    }
+
+    /**
+     *
+     * @param world
+     * @param name
+     * @param loc
+     * @throws LandTeleportLocationException
+     */
+    public void setLandTeleportLocation(World world, String name, Location loc) throws LandTeleportLocationException
+    {
+        if (world == null)
+        {
+            throw new LandTeleportLocationException(LandTeleportLocationException.CAUSE_NULL_WORLD);
+        }
+        if (name == null || name.trim().equals(""))
+        {
+            throw new LandTeleportLocationException(LandTeleportLocationException.CAUSE_NULL_NAME);
+        }
+
+        Land land = getLand(world, name);
+        if (land == null)
+        {
+            throw new LandTeleportLocationException(LandTeleportLocationException.CAUSE_NO_LAND);
+        }
+
+        land.setTeleportLocation(loc);
+        landPersister.save(world, land);
     }
 }

@@ -24,6 +24,8 @@ public class TeleportCommand extends LandSubCommand
     {
         validatePermission(sender,"lands.commands.teleport");
         validatePlayer(sender);
+
+
     }
 
     @Override

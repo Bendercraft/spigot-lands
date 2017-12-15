@@ -3,11 +3,13 @@ package world.avatarhorizon.spigot.lands.persistence;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.World;
 import world.avatarhorizon.spigot.lands.models.ChunkLocation;
 import world.avatarhorizon.spigot.lands.models.Land;
 import world.avatarhorizon.spigot.lands.persistence.serializers.ChunkSerializer;
 import world.avatarhorizon.spigot.lands.persistence.serializers.LandSerializer;
+import world.avatarhorizon.spigot.lands.persistence.serializers.LocationSerializer;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -38,7 +40,9 @@ public class LandPersister implements ILandPersister
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Land.class, new LandSerializer());
         builder.registerTypeAdapter(ChunkLocation.class, new ChunkSerializer());
+        builder.registerTypeAdapter(Location.class, new LocationSerializer());
         builder.setPrettyPrinting();
+
         this.gson = builder.create();
     }
     @Override
