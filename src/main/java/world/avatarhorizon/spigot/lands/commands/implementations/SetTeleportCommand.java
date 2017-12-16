@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 
 public class SetTeleportCommand extends LandSubCommand
 {
-    private static final Pattern SETTELEPORT_PATTERN = Pattern.compile("\"([\\w ]+)\"(.*)");
+    private static final Pattern SETTELEPORT_PATTERN = Pattern.compile("\"([\\w \\-]+)\"(.*)");
 
     public SetTeleportCommand(ResourceBundle resourceBundle, Logger logger, LandsManager landsManager)
     {

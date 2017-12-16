@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 
 public final class CreateCommand extends LandSubCommand
 {
-    private static final Pattern NAME_PATTERN = Pattern.compile("\"([\\w ]+)\"");
+    private static final Pattern NAME_PATTERN = Pattern.compile("\"([\\w \\-]+)\"");
 
     public CreateCommand(ResourceBundle resourceBundle, Logger logger, LandsManager landsManager)
     {

@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 public class DescriptionCommand extends LandSubCommand
 {
 
-    private static final Pattern DESCRIPTION_PATTERN = Pattern.compile("\"([\\w ]+)\" \"([\\w ]+)\"");
+    private static final Pattern DESCRIPTION_PATTERN = Pattern.compile("\"([\\w \\-]+)\" \"([\\w ]+)\"");
 
     public DescriptionCommand(ResourceBundle resourceBundle, Logger logger, LandsManager landsManager)
     {

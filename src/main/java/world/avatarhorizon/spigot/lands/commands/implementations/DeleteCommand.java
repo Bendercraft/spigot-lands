@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 
 public class DeleteCommand extends LandSubCommand
 {
-    private static final Pattern DELETE_PATTERN = Pattern.compile("\"([\\w ]+)\"");
+    private static final Pattern DELETE_PATTERN = Pattern.compile("\"([\\w \\-]+)\"");
 
     public DeleteCommand(ResourceBundle resourceBundle, Logger logger, LandsManager landsManager)
     {

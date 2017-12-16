@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 
 public final class RenameCommand extends LandSubCommand
 {
-    private static final Pattern RENAME_PATTERN = Pattern.compile("\"([\\w ]+)\" \"([\\w ]+)\"");
+    private static final Pattern RENAME_PATTERN = Pattern.compile("\"([\\w \\-]+)\" \"([\\w \\-]+)\"");
 
     public RenameCommand(ResourceBundle resourceBundle, Logger logger, LandsManager landsManager)
     {

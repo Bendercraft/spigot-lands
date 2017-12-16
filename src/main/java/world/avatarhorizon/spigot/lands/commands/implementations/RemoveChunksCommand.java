@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 
 public class RemoveChunksCommand extends LandSubCommand
 {
-    private static final Pattern COMMAND_PATTERN = Pattern.compile("\"([\\w ]+)\" ([a-zA-Z]+)(.*)");
+    private static final Pattern COMMAND_PATTERN = Pattern.compile("\"([\\w \\-]+)\" ([a-zA-Z]+)(.*)");
     private static final String WORLDEDIT = "worldedit";
     private static final String ONE = "one";
     private static final String POSITION = "pos";
