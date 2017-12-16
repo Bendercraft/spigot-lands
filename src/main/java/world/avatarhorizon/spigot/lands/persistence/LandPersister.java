@@ -41,7 +41,7 @@ public class LandPersister implements ILandPersister
         builder.registerTypeAdapter(Land.class, new LandSerializer());
         builder.registerTypeAdapter(ChunkLocation.class, new ChunkSerializer());
         builder.registerTypeAdapter(Location.class, new LocationSerializer());
-        builder.setPrettyPrinting();
+        //builder.setPrettyPrinting();
 
         this.gson = builder.create();
     }
