@@ -66,7 +66,7 @@ public class SetTeleportCommand extends LandSubCommand
         }
         else
         {
-            throw new LandCommandException(messages.getString("error.setteleport.empty_params"));
+            throw new LandCommandException(messages.getString("error.empty_params"));
         }
     }
 

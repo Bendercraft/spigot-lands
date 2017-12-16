@@ -108,4 +108,37 @@ public class Land
     }
 
     //endregion
+
+    public boolean hasChunk(ChunkLocation chunkLocation)
+    {
+        for (ChunkLocation chunk : this.chunks)
+        {
+            if (chunk.equals(chunkLocation))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Land land = (Land) o;
+
+        if (!id.equals(land.id)) return false;
+        return name.equals(land.name);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
+        return result;
+    }
 }

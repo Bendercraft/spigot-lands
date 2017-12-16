@@ -1,10 +1,13 @@
 package world.avatarhorizon.spigot.lands.controllers;
 
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import world.avatarhorizon.spigot.lands.exceptions.*;
 import world.avatarhorizon.spigot.lands.models.ChunkLocation;
 import world.avatarhorizon.spigot.lands.models.Land;
+import world.avatarhorizon.spigot.lands.models.LandPlayer;
 import world.avatarhorizon.spigot.lands.persistence.ILandPersister;
 
 import java.util.*;
@@ -14,13 +17,16 @@ public final class LandsManager
 {
     private final Logger logger;
     private final ILandPersister landPersister;
+
     private Map<World, Map<UUID, Land>> lands;
+    private Map<UUID, LandPlayer> landPlayers;
 
     public LandsManager(Logger logger, ILandPersister landPersister)
     {
         this.logger = logger;
         this.landPersister = landPersister;
 
+        this.landPlayers = new HashMap<>();
         this.loadDataFromFile();
     }
 
@@ -60,6 +66,37 @@ public final class LandsManager
 
         Land land = getLand(worldLands, name);
         if (land != null) return land;
+        return null;
+    }
+
+    /**
+     * Get the land on which the chunk lies
+     * @param chunk
+     * @return
+     */
+    public Land getLand(Chunk chunk)
+    {
+        if (chunk == null)
+        {
+            return null;
+        }
+
+        Map<UUID, Land> worldLands = lands.get(chunk.getWorld());
+        if (worldLands == null)
+        {
+            return null;
+        }
+
+        ChunkLocation cl = new ChunkLocation();
+        cl.setX(chunk.getX());
+        cl.setY(chunk.getZ());
+        for (Land land : worldLands.values())
+        {
+            if (land.hasChunk(cl))
+            {
+                return land;
+            }
+        }
         return null;
     }
 
@@ -287,5 +324,16 @@ public final class LandsManager
 
         land.setTeleportLocation(loc);
         landPersister.save(world, land);
+    }
+
+    public LandPlayer getLandPlayer(Player player)
+    {
+        return landPlayers.computeIfAbsent(player.getUniqueId(), k -> new LandPlayer(player));
+    }
+
+    public void updateLandPlayer(Player player, Land land)
+    {
+        LandPlayer landPlayer = getLandPlayer(player);
+        landPlayer.setCurrentLand(land);
     }
 }
