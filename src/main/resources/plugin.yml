@@ -1,7 +1,7 @@
 name: Lands
 main: world.avatarhorizon.spigot.lands.LandsPlugin
 authors: [Nokorbis, Koudja]
-version: 0.1.0
+version: 1.0.0
 depend: [WorldEdit]
 softdepend: [Multiverse]
 commands:

@@ -1,0 +1,5 @@
+language: java
+jdk:
+  - oraclejdk8
+install: ant -f build.xml.example deps
+script: ant -f build.xml.example compile

@@ -10,6 +10,14 @@
         <property name="config" value="config/" />
         <property name="dist" value="/home/lands" />
     </target>
+    <target name="deps" depends="init">
+        <delete dir="${libdir}/spigot-1.12.2.jar"/>
+        <delete dir="${libdir}/gson-2.8.2.jar"/>
+        <delete dir="${libdir}/worldedit-6.1.7.3.jar}"/>
+        <get src="https://hub.spigotmc.org/nexus/content/groups/public/org/spigotmc/spigot-api/1.12.2-R0.1-SNAPSHOT/spigot-api-1.12.2-R0.1-20171229.033452-68.jar" dest="${libdir}/spigot-1.12.2.jar" usetimestamp="true" />
+        <get src="http://central.maven.org/maven2/com/google/code/gson/gson/2.8.2/gson-2.8.2.jar" dest="${libdir}/gson-2.8.2.jar" usetimestamp="true" />
+        <get src="https://dev.bukkit.org/projects/worldedit/files/2460562/download" dest="${libdir}/worldedit-6.1.7.3.jar"/>
+    </target>
     <target name="clean" depends="init">
         <delete dir="${outputDir}" />
     </target>

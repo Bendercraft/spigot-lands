@@ -1,6 +1,5 @@
 package world.avatarhorizon.spigot.lands.commands.implementations;
 
-import com.mysql.jdbc.Messages;
 import org.bukkit.command.CommandSender;
 import world.avatarhorizon.spigot.lands.commands.LandSubCommand;
 import world.avatarhorizon.spigot.lands.controllers.LandsManager;
@@ -53,7 +52,7 @@ public class HelpCommand extends LandSubCommand
             }
             if (!found)
             {
-                sender.sendMessage(Messages.getString("error.help.not_found"));
+                sender.sendMessage(messages.getString("error.help.not_found"));
             }
         }
     }
