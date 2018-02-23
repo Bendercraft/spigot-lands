@@ -1,4 +1,0 @@
-Dependencies:
-=============
-- Spigot 1.12.2
-- WorldEdit 6.1.9

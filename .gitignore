@@ -30,4 +30,5 @@ hs_err_pid*
 ### Project files
 build.xml
 bin/
+target/
 
