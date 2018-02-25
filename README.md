@@ -1,3 +1,3 @@
-# spigot-lands
+# Lands
 Spigot plugin for lands management  
-[![Build Status](https://travis-ci.org/Nokorbis/spigot-lands.svg?branch=master)](https://travis-ci.org/Nokorbis/spigot-lands)
+[![Build Status](https://travis-ci.org/Bendercraft/spigot-lands.svg?branch=master)](https://travis-ci.org/Bendercraft/spigot-lands)
